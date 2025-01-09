@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voxa - AI Voice Agents</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS Styles -->
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary-color: #1e1e2f;
+            --accent-color: #1e90ff; /* Blue Accent */
+            --background-color: #0d0d1a;
+            --secondary-background: #1e1e2f;
+            --text-color: #ffffff;
+            --subtext-color: #bbbbbb;
+            --border-color: #333333;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --transition-speed: 0.3s;
+            --max-width: 1200px;
+            --header-height: 80px;
+        }
+
+        /* Reset Styles */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--secondary-background);
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: var(--header-height);
+        }
+
+        header img {
+            height: 50px;
+            border-radius: 10px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-size: 14px;
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+            transition: color var(--transition-speed);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background: var(--accent-color);
+            left: 0;
+            bottom: -4px;
+            transition: width var(--transition-speed);
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .create-agent {
+            background: var(--accent-color);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            transition: background var(--transition-speed);
+        }
+
+        .create-agent i {
+            margin-left: 6px;
+        }
+
+        .create-agent:hover {
+            background: #1c86ee;
+        }
+
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        /* Main Section Styles */
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 20px;
+            padding: calc(var(--header-height) + 30px) 30px 30px 30px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            grid-column: 1 / span 1;
+            background: linear-gradient(135deg, #2c2c54, #1e1e2f);
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .hero:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px var(--shadow-color);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .hero button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            align-items: center;
+            transition: background-color var(--transition-speed), transform var(--transition-speed);
+        }
+
+        .hero button i {
+            margin-left: 8px;
+            transition: transform var(--transition-speed);
+        }
+
+        .hero button:hover {
+            background-color: #1c86ee;
+            transform: translateY(-2px);
+        }
+
+        .hero button:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Latest Created Agents Section */
+        .latest-agents {
+            grid-column: 2 / span 1;
+            background: linear-gradient(135deg, #2c2c54, #1e1e2f);
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .latest-agents:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px var(--shadow-color);
+        }
+
+        .latest-agents h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .latest-agents p {
+            font-size: 14px;
+            color: var(--subtext-color);
+        }
+
+        /* Features Section */
+        .features {
+            grid-column: 1 / span 2;
+            display: flex;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #2c2c54, #1e1e2f);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .features:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px var(--shadow-color);
+        }
+
+        .feature-item {
+            text-align: center;
+            max-width: 350px;
+            padding: 20px;
+            transition: background var(--transition-speed), transform var(--transition-speed);
+            border-radius: 10px;
+            cursor: pointer;
+            background: var(--primary-color);
+            color: var(--text-color);
+            flex: 1;
+            margin: 0 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform var(--transition-speed), background var(--transition-speed);
+        }
+
+        .feature-item:first-child {
+            margin-left: 0;
+        }
+
+        .feature-item:last-child {
+            margin-right: 0;
+        }
+
+        .feature-item:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+            color: #fff;
+        }
+
+        .feature-item i {
+            font-size: 30px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            transition: color var(--transition-speed);
+        }
+
+        .feature-item:hover i {
+            color: var(--primary-color);
+        }
+
+        .feature-item h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: inherit;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--subtext-color);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--secondary-background);
+            padding: 20px 30px;
+            text-align: center;
+            box-shadow: 0 -2px 4px var(--shadow-color);
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            font-size: 14px;
+            color: var(--subtext-color);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            main {
+                max-width: 100%;
+                padding: calc(var(--header-height) + 30px) 20px 20px 20px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+                padding: calc(var(--header-height) + 30px) 20px 20px 20px;
+                gap: 20px;
+            }
+
+            .features {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .latest-agents {
+                grid-column: 1 / span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 20px;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                height: var(--header-height);
+            }
+
+            nav {
+                position: absolute;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                background: var(--secondary-background);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 20px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+            }
+
+            nav.open {
+                max-height: 500px; /* Arbitrary high value to show the menu */
+            }
+
+            nav a {
+                padding: 10px 0;
+                width: 100%;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 22px;
+                text-align: center;
+                align-items: center;
+            }
+
+            .features {
+                padding: 20px;
+            }
+
+            .feature-item {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav a {
+                font-size: 12px;
+            }
+
+            .create-agent {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .hero h1 {
+                font-size: 18px;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 30px 20px;
+            }
+
+            .features {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .feature-item {
+                max-width: 100%;
+                margin: 0;
+            }
+
+            main {
+                padding: calc(var(--header-height) + 30px) 15px 15px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <img src="logo.png" alt="Voxa Logo">
+        <nav id="nav-menu">
+            <a href="#"><i class="fas fa-home"></i> Homepage</a>
+            <a href="#"><i class="fas fa-cogs"></i> Features</a>
+            <a href="#"><i class="fas fa-chart-line"></i> Chart</a>
+            <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="https://voxalabs.com/agents"><i class="fas fa-robot"></i> All Agents</a>
+            <a href="http://voxalabs.com/agents" class="create-agent"><i class="fas fa-plus"></i> Create Agent</a>
+        </nav>
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <!-- Hero Section -->
+        <<div class="hero">
+    <img src="logo.png" alt="Voxa 3D Logo">
+    <h1>Create intelligent, real-time voice agents for live browser interactions with the power of AI.</h1>
+    <a href="http://voxalabs.com/agents">
+        <button>Create your AI voice agent <i class="fas fa-arrow-right"></i></button>
+    </a>
+</div>
+
+
+        <!-- Latest Created Agents Section -->
+        <div class="latest-agents">
+            <h3>Latest Created Agents</h3>
+            <p>Loading...</p>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <div class="feature-item">
+                <i class="fas fa-user-cog"></i>
+                <h3>Customizable Personalities</h3>
+                <p>Voxa enables you to design agents with unique traits and purposes, adapting their tone and style to fit any role.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-heartbeat"></i>
+                <h3>Emotion Recognition</h3>
+                <p>Voxa is built to recognize and interpret emotional cues in both voice and language for more engaging conversations.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-sync-alt"></i>
+                <h3>Contextual Adaptation</h3>
+                <p>Voxa dynamically adjusts its responses to align perfectly with the situation for seamless interactions.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Voxa. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for Hamburger Menu -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close the menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!hamburger.contains(event.target) && !navMenu.contains(event.target)) {
+                navMenu.classList.remove('open');
+                hamburger.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
