@@ -92,7 +92,7 @@ if (sortOrderBtn) {
 // Load Agents from Backend
 async function loadAgents() {
   try {
-    const response = await fetch(`https://gzippo-production.up.railway.app/backend/api/agents?limit=${agentLimit}&offset=${agentOffset}`);
+    const response = await fetch(`https://gzippo-production.up.railway.app/api/agents?limit=${agentLimit}&offset=${agentOffset}`);
     const result = await response.json();
     if (response.ok) {
       if (agentOffset === 0) {
@@ -207,7 +207,7 @@ async function handleCreateAgent() {
       icon: '', // Add a default icon or allow user to specify
     };
 
-    const response = await fetch('https://gzippo-production.up.railway.app/backend/api/agents', {
+    const response = await fetch('https://gzippo-production.up.railway.app/api/agents', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(agentData),
