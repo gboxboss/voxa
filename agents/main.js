@@ -193,7 +193,7 @@ async function handleCreateAgent() {
   }
 
   if (!name || !description || !voice || !systemPrompt) {
-    showNotification('Please fill in all required fields.', 'error');
+    showNotification('Please fill in all required fields, including Voice and System Prompt.', 'error');
     return;
   }
 
@@ -206,6 +206,8 @@ async function handleCreateAgent() {
       voice_name: voice,
       icon: '', // Add a default icon or allow user to specify
     };
+
+    console.log('Payload:', agentData); // Debugging payload
 
     const response = await fetch('https://gzippo-production.up.railway.app/api/agents', {
       method: 'POST',
