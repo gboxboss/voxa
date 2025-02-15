@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Optimuu – Servicios</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #3d8c40;
+      --text: #1a1a1a;
+      --background: #ffffff;
+      --gray-100: #f8f9fa;
+      --gray-200: #e9ecef;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+      --container-width: 1280px;
+      --header-height: 80px;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: var(--background);
+    }
+    .container {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+    h3 {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+    }
+    p {
+      font-size: 1.125rem;
+      color: #4a4a4a;
+      margin-bottom: 1.5rem;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: var(--header-height);
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gray-200);
+      z-index: 1000;
+    }
+    .header-inner {
+      height: var(--header-height);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo img {
+      height: 40px;
+    }
+    nav ul {
+      display: flex;
+      gap: 4rem;
+      list-style: none;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 1.125rem;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--primary);
+      transition: width 0.2s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    nav a.active::after {
+      width: 100%;
+    }
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .hero {
+      padding: calc(var(--header-height) + 4rem) 0 6rem;
+      background: linear-gradient(170deg, var(--gray-100) 0%, white 100%);
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+    .hero p {
+      font-size: 1.125rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .services {
+      padding: 6rem 0;
+      background: var(--gray-100);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .service-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s ease;
+      text-align: center;
+      padding: 2rem;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    .service-icon {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    footer {
+      background: var(--gray-100);
+      padding: 4rem 0;
+    }
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .footer-top img {
+      height: 40px;
+    }
+    .footer-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .footer-menu a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.2s ease;
+    }
+    .footer-menu a:hover {
+      color: var(--primary-dark);
+    }
+    .footer-copyright {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    @media (max-width: 1024px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+      nav ul {
+        gap: 2rem;
+      }
+    }
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+      nav {
+        display: none;
+      }
+      nav.open {
+        display: block;
+        background: var(--background);
+        position: absolute;
+        top: var(--header-height);
+        right: 0;
+        left: 0;
+        padding: 1rem 2rem;
+        box-shadow: var(--shadow-md);
+      }
+      nav.open ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="images/cropped-cropped-Diapositiva2-scaled-2.webp" alt="Logo Optimuu">
+      </a>
+      <button class="mobile-menu-toggle" aria-label="Menú móvil">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html" class="active">Servicios</a></li>
+          <li><a href="crowdfunding-3.html">Crowdfunding</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Servicios para Ganaderos y Ganaderas</h1>
+        <p>Ofrecemos una serie de servicios que facilitan el trabajo de los ganaderos y ganaderas del sector de vacuno de leche.</p>
+      </div>
+    </section>
+    <section class="services">
+      <div class="container">
+        <h2>Nuestras Soluciones</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-desktop"></i>
+            </div>
+            <h3>App/Web</h3>
+            <p>Acceso a una interfaz que permite controlar y gestionar tu explotación en cualquier momento desde cualquier lugar.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>Modelo Predictivo</h3>
+            <p>Un modelo basado en IA y Machine Learning que interpreta los datos para que tú no tengas que hacerlo.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-history"></i>
+            </div>
+            <h3>Historial</h3>
+            <p>Accede al historial completo de todos los animales para ver la evolución de su estado.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <h3>Informes</h3>
+            <p>Descarga informes personalizados según tus necesidades y las de tus clientes.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-headset"></i>
+            </div>
+            <h3>Soporte</h3>
+            <p>Contacta con nosotros para resolver cualquier duda o problema con la interfaz.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>Recomendaciones</h3>
+            <p>Si quieres seguir automatizando procesos, te recomendamos dispositivos compatibles con los ya instalados para evitar problemas con datos duplicados o erróneos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-top">
+        <img src="images/logo.png" alt="Logo Optimuu">
+        <p class="footer-copyright">
+          © 2025 Optimuu. Todos los derechos reservados.
+        </p>
+      </div>
+      <div class="footer-menu">
+        <ul>
+          <li><a href="privacy-policy.html">Política de Privacidad</a></li>
+          <li><a href="refund-policy.html">Política de Reembolso</a></li>
+          <li><a href="terms-conditions.html">Términos y Condiciones</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('header nav');
+    mobileMenuToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

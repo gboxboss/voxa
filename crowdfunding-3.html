@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crowdfunding – Optimuu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #3d8c40;
+      --text: #1a1a1a;
+      --background: #ffffff;
+      --gray-100: #f8f9fa;
+      --gray-200: #e9ecef;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+      --container-width: 1280px;
+      --header-height: 80px;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: var(--background);
+    }
+    .container {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+    h3 {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+    }
+    p {
+      font-size: 1.125rem;
+      color: #4a4a4a;
+      margin-bottom: 1.5rem;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: var(--header-height);
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gray-200);
+      z-index: 1000;
+    }
+    .header-inner {
+      height: var(--header-height);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo img {
+      height: 40px;
+    }
+    nav ul {
+      display: flex;
+      gap: 4rem;
+      list-style: none;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 1.125rem;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--primary);
+      transition: width 0.2s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    nav a.active::after {
+      width: 100%;
+    }
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .hero {
+      padding: calc(var(--header-height) + 4rem) 0 6rem;
+      background: linear-gradient(170deg, var(--gray-100) 0%, white 100%);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 5vw, 3rem);
+    }
+    .hero-content p {
+      margin-bottom: 1rem;
+    }
+    .hero-image img {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+    }
+    .campaign-overview {
+      padding: 6rem 0;
+      background: var(--background);
+    }
+    .campaign-overview .section-title {
+      margin-bottom: 3rem;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .overview-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .overview-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .overview-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .overview-card .card-content {
+      padding: 1.5rem;
+    }
+    .overview-card .card-content h3 {
+      margin-bottom: 0.75rem;
+    }
+    .collaboration {
+      padding: 6rem 0;
+      background: var(--gray-100);
+    }
+    .collaboration .section-title {
+      margin-bottom: 3rem;
+    }
+    .collab-grid {
+      display: grid;
+      gap: 3rem;
+    }
+    .collab-card {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 1rem;
+    }
+    .collab-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .collab-card .collab-image {
+      flex: 1;
+    }
+    .collab-card .collab-image img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border-radius: 8px;
+    }
+    .collab-card .collab-content {
+      flex: 1.2;
+    }
+    .collab-card.reverse {
+      flex-direction: row-reverse;
+    }
+    .collab-card .collab-content h3 {
+      margin-bottom: 0.75rem;
+    }
+    .collab-card .collab-content p {
+      margin-bottom: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-size: 1.125rem;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    footer {
+      background: var(--gray-100);
+      padding: 4rem 0;
+    }
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .footer-top img {
+      height: 40px;
+    }
+    .footer-menu ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .footer-menu a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.2s ease;
+    }
+    .footer-menu a:hover {
+      color: var(--primary-dark);
+    }
+    .footer-copyright {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    @media (max-width: 1024px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+      nav ul {
+        gap: 2rem;
+      }
+    }
+    @media (max-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .collab-card {
+        flex-direction: column;
+      }
+      .collab-card.reverse {
+        flex-direction: column;
+      }
+      nav {
+        display: none;
+      }
+      .mobile-menu-toggle {
+        display: block;
+      }
+    }
+    nav.open {
+      display: block !important;
+      background: var(--background);
+      position: absolute;
+      top: var(--header-height);
+      right: 0;
+      left: 0;
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow-md);
+    }
+    nav.open ul {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="images/cropped-cropped-Diapositiva2-scaled-2.webp" alt="Logo Optimuu">
+      </a>
+      <button class="mobile-menu-toggle" aria-label="Menú móvil">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="crowdfunding-3.html" class="active">Crowdfunding</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1>Campaña de Crowdfunding</h1>
+          <p>Pronto llegará el momento que llevamos tiempo esperando…</p>
+          <h3><strong>¡En SEPTIEMBRE lanzamos nuestra campaña de crowdfunding!</strong></h3>
+          <a href="https://www.crowdants.com/santander-x-explorer/optimuu/4764" class="btn btn-primary" target="_blank">Saber más</a>
+        </div>
+        <div class="hero-image">
+          <img src="images/septiembre-2.webp" alt="Calendario septiembre">
+        </div>
+      </div>
+    </section>
+    <section class="campaign-overview">
+      <div class="container">
+        <h2 class="section-title">Descubre la Campaña</h2>
+        <div class="overview-grid">
+          <div class="overview-card">
+            <img src="images/crowdfunding__3_-removebg-preview-2.webp" alt="Crowdfunding illustration">
+            <div class="card-content">
+              <h3>¿Qué es el crowdfunding?</h3>
+              <p>Cooperación colectiva para conseguir colaboraciones, dinero u otros recursos que permitan avanzar en un proyecto.</p>
+            </div>
+          </div>
+          <div class="overview-card">
+            <img src="images/6.webp" alt="Objetivos">
+            <div class="card-content">
+              <h3>¿Conoces nuestros objetivos?</h3>
+              <p>Visibilizar el proyecto y formar una comunidad con el apoyo de expertos del sector para co-crear nuestra interfaz. Además, buscamos colaboradores en desarrollo, análisis de datos y comunicación.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="collaboration">
+      <div class="container">
+        <h2 class="section-title">Únete y Colabora</h2>
+        <div class="collab-grid">
+          <div class="collab-card">
+            <div class="collab-image">
+              <img src="images/crowdfunding-4.webp" alt="Co-creación">
+            </div>
+            <div class="collab-content">
+              <h3>Co-crea con nosotros!!!</h3>
+              <p>Si eres un experto del sector (ganaderx, cooperativa agroalimentaria, veterinarixs, etc.), tu sugerencia puede aportar gran valor a Optimuu. ¡Sé de los primeros en probar nuestro prototipo!</p>
+            </div>
+          </div>
+          <div class="collab-card reverse">
+            <div class="collab-image">
+              <img src="images/crowdfunding-5-1.webp" alt="Colaboración">
+            </div>
+            <div class="collab-content">
+              <h3>Colabora en el desarrollo!!!</h3>
+              <p>Buscamos colaboradores voluntarios: expertos en desarrollo de aplicaciones, análisis de datos, veterinaria y comunicación. Contribuye según tu disponibilidad y forma parte de esta transformación.</p>
+              <a href="https://www.crowdants.com/santander-x-explorer/optimuu/4764" class="btn btn-primary" target="_blank">Saber más</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-top">
+        <img src="images/logo.png" alt="Logo Optimuu">
+        <p class="footer-copyright">
+          © 2025 Optimuu. Todos los derechos reservados.
+        </p>
+      </div>
+      <div class="footer-menu">
+        <ul>
+			<li><a href="privacy-policy.html">Política de Privacidad</a></li>
+			<li><a href="refund-policy.html">Política de Reembolso</a></li>
+			<li><a href="terms-conditions.html">Términos y Condiciones</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('header nav');
+    mobileMenuToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
