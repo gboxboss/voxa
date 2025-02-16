@@ -1,429 +1,467 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Crowdfunding – Optimuu</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    :root {
-      --primary: #4CAF50;
-      --primary-dark: #3d8c40;
-      --text: #1a1a1a;
-      --background: #ffffff;
-      --gray-100: #f8f9fa;
-      --gray-200: #e9ecef;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
-      --container-width: 1280px;
-      --header-height: 80px;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      color: var(--text);
-      line-height: 1.7;
-      background: var(--background);
-    }
-    .container {
-      max-width: var(--container-width);
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-    h1, h2, h3, h4 {
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      letter-spacing: -0.02em;
-    }
-    h2 {
-      font-size: clamp(2rem, 4vw, 2.5rem);
-      letter-spacing: -0.01em;
-      text-align: center;
-    }
-    h3 {
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-    }
-    p {
-      font-size: 1.125rem;
-      color: #4a4a4a;
-      margin-bottom: 1.5rem;
-    }
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: var(--header-height);
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--gray-200);
-      z-index: 1000;
-    }
-    .header-inner {
-      height: var(--header-height);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo img {
-      height: 40px;
-    }
-    nav ul {
-      display: flex;
-      gap: 4rem;
-      list-style: none;
-    }
-    nav a {
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
-      font-size: 1.125rem;
-      transition: color 0.2s ease;
-      position: relative;
-    }
-    nav a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background-color: var(--primary);
-      transition: width 0.2s ease;
-    }
-    nav a:hover::after {
-      width: 100%;
-    }
-    nav a.active::after {
-      width: 100%;
-    }
-    .mobile-menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    .hero {
-      padding: calc(var(--header-height) + 4rem) 0 6rem;
-      background: linear-gradient(170deg, var(--gray-100) 0%, white 100%);
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-    .hero-content h1 {
-      font-size: clamp(2.5rem, 5vw, 3rem);
-    }
-    .hero-content p {
-      margin-bottom: 1rem;
-    }
-    .hero-image img {
-      width: 100%;
-      max-width: 500px;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: var(--shadow-lg);
-    }
-    .campaign-overview {
-      padding: 6rem 0;
-      background: var(--background);
-    }
-    .campaign-overview .section-title {
-      margin-bottom: 3rem;
-    }
-    .overview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-    .overview-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .overview-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-    .overview-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .overview-card .card-content {
-      padding: 1.5rem;
-    }
-    .overview-card .card-content h3 {
-      margin-bottom: 0.75rem;
-    }
-    .collaboration {
-      padding: 6rem 0;
-      background: var(--gray-100);
-    }
-    .collaboration .section-title {
-      margin-bottom: 3rem;
-    }
-    .collab-grid {
-      display: grid;
-      gap: 3rem;
-    }
-    .collab-card {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      padding: 1rem;
-    }
-    .collab-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-    .collab-card .collab-image {
-      flex: 1;
-    }
-    .collab-card .collab-image img {
-      width: 100%;
-      max-width: 400px;
-      height: auto;
-      border-radius: 8px;
-    }
-    .collab-card .collab-content {
-      flex: 1.2;
-    }
-    .collab-card.reverse {
-      flex-direction: row-reverse;
-    }
-    .collab-card .collab-content h3 {
-      margin-bottom: 0.75rem;
-    }
-    .collab-card .collab-content p {
-      margin-bottom: 1rem;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      padding: 1rem 2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      font-size: 1.125rem;
-    }
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-      box-shadow: var(--shadow-sm);
-    }
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-    footer {
-      background: var(--gray-100);
-      padding: 4rem 0;
-    }
-    .footer-content {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      align-items: center;
-      text-align: center;
-    }
-    .footer-top {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-    .footer-top img {
-      height: 40px;
-    }
-    .footer-menu ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 1rem;
-    }
-    .footer-menu a {
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
-      font-size: 1rem;
-      transition: color 0.2s ease;
-    }
-    .footer-menu a:hover {
-      color: var(--primary-dark);
-    }
-    .footer-copyright {
-      font-size: 0.9rem;
-      color: #666;
-    }
-    @media (max-width: 1024px) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crowdfunding – Optimuu</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4caf50;
+        --primary-dark: #3d8c40;
+        --text: #1a1a1a;
+        --background: #ffffff;
+        --gray-100: #f8f9fa;
+        --gray-200: #e9ecef;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --container-width: 1280px;
+        --header-height: 80px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        color: var(--text);
+        line-height: 1.7;
+        background: var(--background);
+      }
+      /* Global container for main content */
       .container {
-        padding: 0 1.5rem;
+        max-width: var(--container-width);
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      /* Override container in header for full-width responsiveness */
+      header > .container {
+        max-width: 100%;
+        padding: 0 1rem;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+      }
+      h1 {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        letter-spacing: -0.02em;
+      }
+      h2 {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        letter-spacing: -0.01em;
+        text-align: center;
+      }
+      h3 {
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+      }
+      p {
+        font-size: 1.125rem;
+        color: #4a4a4a;
+        margin-bottom: 1.5rem;
+      }
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: var(--header-height);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--gray-200);
+        z-index: 1000;
+      }
+      .header-inner {
+        height: var(--header-height);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo img {
+        height: 40px;
+        width: auto;
       }
       nav ul {
-        gap: 2rem;
+        display: flex;
+        gap: 4rem;
+        list-style: none;
       }
-    }
-    @media (max-width: 768px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+      nav a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 1.125rem;
+        transition: color 0.2s ease;
+        position: relative;
       }
-      .collab-card {
-        flex-direction: column;
+      nav a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: var(--primary);
+        transition: width 0.2s ease;
       }
-      .collab-card.reverse {
-        flex-direction: column;
+      nav a:hover::after {
+        width: 100%;
       }
-      nav {
-        display: none;
+      nav a.active::after {
+        width: 100%;
       }
       .mobile-menu-toggle {
-        display: block;
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
       }
-    }
-    nav.open {
-      display: block !important;
-      background: var(--background);
-      position: absolute;
-      top: var(--header-height);
-      right: 0;
-      left: 0;
-      padding: 1rem 2rem;
-      box-shadow: var(--shadow-md);
-    }
-    nav.open ul {
-      flex-direction: column;
-      gap: 1rem;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <img src="images/cropped-cropped-Diapositiva2-scaled-2.webp" alt="Optimuu Logo">
-      </a>
-      <button class="mobile-menu-toggle" aria-label="Mobile Menu">
-        <i class="fas fa-bars"></i>
-      </button>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="crowdfunding.html" class="active">Crowdfunding</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <h1>Crowdfunding Campaign</h1>
-          <p>The moment we have been waiting for is coming soon…</p>
-          <h3><strong>Our crowdfunding campaign launches in SEPTEMBER!</strong></h3>
-          <a href="https://www.crowdants.com/santander-x-explorer/optimuu/4764" class="btn btn-primary" target="_blank">Learn More</a>
-        </div>
-        <div class="hero-image">
-          <img src="images/septiembre-2.webp" alt="September Calendar">
-        </div>
+      .hero {
+        padding: calc(var(--header-height) + 4rem) 0 6rem;
+        background: linear-gradient(170deg, var(--gray-100) 0%, white 100%);
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        align-items: start;
+      }
+      .legal-framework-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .legal-section {
+        margin-bottom: 2rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        font-size: 1.125rem;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+        box-shadow: var(--shadow-sm);
+      }
+      .btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      /* New smaller button style */
+      .btn-small {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+      }
+      .button-wrapper {
+        text-align: center;
+        margin-top: 2rem;
+      }
+      footer {
+        background: var(--gray-100);
+        padding: 4rem 0;
+      }
+      .footer-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+        text-align: center;
+      }
+      .footer-top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+      .footer-top img {
+        height: 40px;
+      }
+      .footer-menu ul {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+      .footer-menu a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 1rem;
+        transition: color 0.2s ease;
+      }
+      .footer-menu a:hover {
+        color: var(--primary-dark);
+      }
+      .footer-copyright {
+        font-size: 0.9rem;
+        color: #666;
+      }
+      @media (max-width: 1024px) {
+        .container {
+          padding: 0 1.5rem;
+        }
+        nav ul {
+          gap: 2rem;
+        }
+      }
+      @media (max-width: 768px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        nav {
+          display: none;
+        }
+        .mobile-menu-toggle {
+          display: block;
+        }
+      }
+      nav.open {
+        display: block !important;
+        background: var(--background);
+        position: absolute;
+        top: var(--header-height);
+        right: 0;
+        left: 0;
+        padding: 1rem 2rem;
+        box-shadow: var(--shadow-md);
+      }
+      nav.open ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-inner">
+        <a href="index.html" class="logo">
+          <img
+            src="images/cropped-cropped-Diapositiva2-scaled-2.webp"
+            alt="Optimuu Logo"
+          />
+        </a>
+        <button class="mobile-menu-toggle" aria-label="Mobile Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="Apply now.html" class="active">Apply Now</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
       </div>
-    </section>
-    <section class="campaign-overview">
-      <div class="container">
-        <h2 class="section-title">Discover the Campaign</h2>
-        <div class="overview-grid">
-          <div class="overview-card">
-            <img src="images/crowdfunding__3_-removebg-preview-2.webp" alt="Crowdfunding illustration">
-            <div class="card-content">
-              <h3>What is crowdfunding?</h3>
-              <p>Collective cooperation to secure contributions, funding, or other resources to advance a project.</p>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="legal-framework-content">
+            <h1>How It Works</h1>
+            <div class="legal-section">
+              <p>
+                <strong>1. Application Process:</strong><br />
+                The first step is to <strong>apply via WhatsApp</strong>.
+                You’ll initiate contact with our team where we’ll gather the
+                necessary information about your personal project or cause.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong>2. Signing Contracts & NDA:</strong><br />
+                Once your application is reviewed, you will be required to
+                <strong>sign a contract and NDA</strong>. This ensures the
+                confidentiality of all the details related to your project and
+                helps us structure the support accordingly.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong>3. Document Submission & Review:</strong><br />
+                After signing the contract, you’ll need to provide the
+                required <strong>documentation</strong> as per the project
+                guidelines. Our team will assess the information and determine
+                if your cause aligns with our standards and objectives.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong>4. Onboarding & Project Analysis:</strong><br />
+                Upon approval, we’ll officially <strong>onboard</strong> you
+                onto the platform. Our team will then
+                <strong>analyze your project</strong> to assess its potential
+                and determine the next steps for promotion.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong>5. Personalized Ad Creation:</strong><br />
+                If your project is approved, we’ll collaborate with you to
+                <strong>create personalized ads</strong>. Our design team will
+                develop creative content that effectively communicates your
+                cause to the right audience.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong>6. Custom Checkout Page:</strong><br />
+                Once the ads are finalized, you’ll be provided with a
+                <strong>custom checkout page</strong> for collecting
+                contributions. This page is tailored specifically to your
+                project, making it easy for supporters to contribute.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong>7. Payment Based on Contract:</strong><br />
+                <strong>Payments</strong> will be made based on the terms
+                outlined in your contract. Once your project has generated
+                funds through the ads, payments will be processed and sent to
+                you in accordance with the
+                <strong>contractual agreement</strong>. The disbursement will
+                follow a <strong>pre-established schedule</strong> that
+                ensures payments are made after certain milestones are met,
+                based on the success of your campaign.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong>8. Ticket System:</strong><br />
+                We offer a structured ticket system to help manage
+                contributions for your project. The most common ticket values
+                we work with are
+                <strong>$25, $50, $100, $300, $500, $750, $1000, $1500, and
+                $2000</strong>. These amounts are in <strong>US Dollars</strong>
+                and are designed to provide flexibility for supporters to
+                contribute at different levels. Each ticket corresponds to a set
+                amount of support for your cause, and contributors can select a
+                ticket based on their comfort level. This transparent system
+                allows you to easily track the progress of your campaign and
+                ensures that both you and your supporters are aligned with the
+                contributions made.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong>9. Legal Framework & Compliance:</strong><br />
+                At JhonCare, we ensure full
+                <strong>legal compliance</strong> with relevant national and
+                international regulations governing commercial transactions,
+                consumer protection, and financial activities. Below are the
+                laws and articles that support our platform's operational
+                framework:
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong
+                  >Brazilian Civil Code (Article 104) – Contractual Nature of
+                  Transactions (Brazil):</strong
+                ><br />
+                This article ensures that all transactions on our platform are
+                treated as legitimate
+                <strong>commercial agreements</strong> rather than donations or
+                crowdfunding. It stipulates that contracts are formed through
+                mutual consent for the exchange of goods or services, which aligns
+                with the services we provide to individuals.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong
+                  >Brazilian Consumer Protection Code (CDC - Law 8.078/90,
+                  Article 6) – Consumer Rights (Brazil):</strong
+                ><br />
+                In accordance with the Brazilian Consumer Protection Code, we
+                uphold <strong>consumer rights</strong> during the purchasing
+                process, ensuring that all
+                <strong>commercial transactions</strong> comply with national
+                <strong>consumer protection standards</strong>. Refund
+                policies, transparency, and dispute resolution are all governed
+                under this law.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong
+                  >EU Consumer Protection Laws (Directive 2011/83/EU, Article
+                  2) – Service Contracts and Consumer Rights (European Union):</strong
+                ><br />
+                Under the
+                <strong>European Union’s Consumer Rights Directive</strong>,
+                our platform adheres to standards that ensure all services
+                provided are under <strong>contractual agreements</strong>.
+                The directive emphasizes
+                <strong>service contracts</strong> where the consumer has the
+                right to receive services in exchange for payment, and we
+                ensure full transparency in our processes.
+              </p>
+            </div>
+            <div class="legal-section">
+              <p>
+                <strong>International Anti-Money Laundering Laws – Global
+                Compliance:</strong><br />
+                We comply with international
+                <strong>anti-money laundering (AML)</strong> regulations,
+                including the
+                <strong
+                  >Financial Action Task Force (FATF) recommendations</strong
+                >. This ensures that all financial activities on our platform are
+                legitimate, secure, and do not involve illicit activities.
+                This includes
+                <strong>KYC (Know Your Customer)</strong> protocols for users
+                contributing or receiving payments.
+              </p>
             </div>
           </div>
-          <div class="overview-card">
-            <img src="images/6.webp" alt="Objectives">
-            <div class="card-content">
-              <h3>Do you know our objectives?</h3>
-              <p>We aim to raise awareness for the project and build a community with support from industry experts to co-create our interface. We are also seeking collaborators in development, data analysis, and communications.</p>
-            </div>
+          <div class="button-wrapper">
+            <a href="services.html" class="btn btn-primary btn-small">
+              Learn More
+            </a>
           </div>
         </div>
-      </div>
-    </section>
-    <section class="collaboration">
-      <div class="container">
-        <h2 class="section-title">Join and Collaborate</h2>
-        <div class="collab-grid">
-          <div class="collab-card">
-            <div class="collab-image">
-              <img src="images/crowdfunding-4.webp" alt="Co-creation">
-            </div>
-            <div class="collab-content">
-              <h3>Co-create with us!!!</h3>
-              <p>If you are an industry expert (livestock farmer, agri-cooperative, veterinarian, etc.), your suggestion can add great value to Optimuu. Be one of the first to try our prototype!</p>
-            </div>
-          </div>
-          <div class="collab-card reverse">
-            <div class="collab-image">
-              <img src="images/crowdfunding-5-1.webp" alt="Collaboration">
-            </div>
-            <div class="collab-content">
-              <h3>Collaborate in the development!!!</h3>
-              <p>We are seeking volunteer collaborators: experts in application development, data analysis, veterinary, and communications. Contribute as per your availability and be part of this transformation.</p>
-              <a href="https://www.crowdants.com/santander-x-explorer/optimuu/4764" class="btn btn-primary" target="_blank">Learn More</a>
-            </div>
-          </div>
+      </section>
+    </main>
+    <footer>
+      <div class="container footer-content">
+        <div class="footer-top">
+          <img src="images/logo.png" alt="Optimuu Logo" />
+          <p class="footer-copyright">© 2025 Optimuu. All rights reserved.</p>
+        </div>
+        <div class="footer-menu">
+          <ul>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="refund-policy.html">Refund Policy</a></li>
+            <li><a href="terms-conditions.html">Terms and Conditions</a></li>
+          </ul>
         </div>
       </div>
-    </section>
-  </main>
-  <footer>
-    <div class="container footer-content">
-      <div class="footer-top">
-        <img src="images/logo.png" alt="Optimuu Logo">
-        <p class="footer-copyright">
-          © 2025 Optimuu. All rights reserved.
-        </p>
-      </div>
-      <div class="footer-menu">
-        <ul>
-          <li><a href="privacy-policy.html">Privacy Policy</a></li>
-          <li><a href="refund-policy.html">Refund Policy</a></li>
-          <li><a href="terms-conditions.html">Terms and Conditions</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-  <script>
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const nav = document.querySelector('header nav');
-    mobileMenuToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-  </script>
-</body>
+    </footer>
+    <script>
+      const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+      const nav = document.querySelector("header nav");
+      mobileMenuToggle.addEventListener("click", () => {
+        nav.classList.toggle("open");
+      });
+    </script>
+  </body>
 </html>
